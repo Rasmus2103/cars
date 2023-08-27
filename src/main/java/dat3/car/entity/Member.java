@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String username;
 
     @Column(name = "email", length = 60, nullable = false)
