@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 @Entity
-public class Car {
+public class Car extends AdminDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;

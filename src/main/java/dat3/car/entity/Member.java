@@ -14,29 +14,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 
 @Entity
-public class Member {
+public class Member extends AdminDetails{
     @Id
     String username;
 
-    @Column(name = "email", length = 60, nullable = false)
+    @Column(name = "email", length = 60)
     String email;
 
-    @Column(name = "password", length = 70, nullable = false)
+    @Column(name = "password", length = 70)
     String password;
 
-    @Column(name = "firstname", length = 40, nullable = false)
+    @Column(name = "firstname", length = 40)
     String firstName;
 
-    @Column(name = "lastname", length = 40, nullable = false)
+    @Column(name = "lastname", length = 40)
     String lastName;
 
-    @Column(name = "street", length = 60, nullable = false)
+    @Column(name = "street", length = 60)
     String street;
 
-    @Column(name = "city", length = 60, nullable = false)
+    @Column(name = "city", length = 60)
     String city;
 
-    @Column(name = "zip", length = 60, nullable = false)
+    @Column(name = "zip", length = 60)
     String zip;
 
     @Column(name = "approved")
@@ -44,12 +44,6 @@ public class Member {
 
     @Column(name = "ranking")
     int ranking;
-
-    @CreationTimestamp
-    LocalDateTime created;
-
-    @UpdateTimestamp
-    LocalDateTime lastEdited;
 
     public Member(String user, String password, String email, String firstName,
                   String lastName, String street, String city, String zip) {
