@@ -1,6 +1,7 @@
 package dat3.car.dto;
 
 import dat3.car.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberRequest {
     String username;
