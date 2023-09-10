@@ -5,7 +5,11 @@ I have used @OneToMany Annontation in my **Member** entity class, and have set a
 I have used @ManyToOne annontation in my **Reservation** entity class and initianzed with my **Member** and **Car** class, because, because in how the application is set up, both car and member can have many reservations, but there can only a reservation for each pacticular member and car. 
 
 ## The Purpose of the CascadeType, FetchType, and mappedBy Attributes You Can Use with One-to-Many
+CascadeType is what happends with different entitys/columms are updated, persisted or deleted. In this application we have relationships with two different columns, and we have to have some way to be handled if there in some way any there are being altered. 
 
+The FetchType have two options **EAGER** and **LAZY**. **EAGER** means that the associated entities will be loaded immediately when we fetch the owning entity. **LAZY** means that the associated entities will be loaded from the database only when we want access them explicitly. We have in this use more of the **LAZY** option because we in our methods specifically ask the get something from the column. 
+
+The mappedBy attribute is used in a bidirectional relationship between entities, and ensures that changes made on one side of the relationship are correctly synchronized with the other side. 
 
 ## How/Where You Have (If Done) Added User Defined Queries to Your Repositories
 
