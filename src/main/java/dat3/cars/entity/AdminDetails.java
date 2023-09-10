@@ -1,4 +1,4 @@
-package dat3.car.entity;
+package dat3.cars.entity;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;

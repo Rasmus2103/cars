@@ -1,13 +1,10 @@
-package dat3.car.service;
+package dat3.cars.service;
 
-import dat3.car.dto.CarDTO;
-import dat3.car.dto.MemberRequest;
-import dat3.car.dto.MemberResponse;
-import dat3.car.entity.Car;
-import dat3.car.entity.Member;
-import dat3.car.repository.CarsRepository;
+import dat3.cars.dto.CarRequest;
+import dat3.cars.dto.CarResponse;
+import dat3.cars.entity.Car;
+import dat3.cars.repository.CarsRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,21 +19,21 @@ public class CarService {
         this.carsRepository = carsRepository;
     }
 
-    public List<CarDTO> getCars(boolean includeAll) {
+    public List<CarResponse> getCars(boolean includeAll) {
         List<Car> cars = carsRepository.findAll();
-        List<CarDTO> carDTOS = cars.stream().map(car -> new CarDTO(car, includeAll)).toList();
+        List<CarResponse> carDTOS = cars.stream().map(car -> new CarResponse(car, includeAll)).toList();
         return carDTOS;
     }
 
-    public CarDTO addCar(CarDTO body) {
+    public CarResponse addCar(CarRequest body) {
         if(carsRepository.existsById(body.getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This user already exists");
         }
 
-        Car newCar = CarDTO.getCarEntity(body);
+        Car newCar = CarRequest.getCarEntity(body);
 
         newCar = carsRepository.save(newCar);
-        return new CarDTO(newCar, true);
+        return new CarResponse(newCar, true);
     }
 
 //    public ResponseEntity<Boolean> editCar(CarDTO body, int id) {
@@ -51,9 +48,10 @@ public class CarService {
 //        return ResponseEntity.ok(true);
 //    }
 
-    public CarDTO findCarById(int id) {
-        Car car = getCarById(id);
-        return new CarDTO(car, true);
+
+    public CarResponse findCarByVBrand(String brand) {
+        Car car = carsRepository.findByBrand(brand);
+        return new CarResponse(car, true);
     }
 
     public void deleteCarById(int id) {

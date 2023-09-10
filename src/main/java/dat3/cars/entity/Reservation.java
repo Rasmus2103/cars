@@ -1,26 +1,24 @@
-package dat3.car.entity;
+package dat3.cars.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
-
+//Lombok above
 @Entity
-public class Reservation {
+public class Reservation extends AdminDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime reservationDate;
+    private LocalDate rentalDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
@@ -30,4 +28,11 @@ public class Reservation {
     @JoinColumn(name = "member_username")
     private Member member;
 
+    public Reservation(LocalDate rentalDate, Car car, Member member) {
+        this.rentalDate = rentalDate;
+        this.car = car;
+        this.member = member;
+        car.addReservation(this);
+        member.addReservation(this);
+    }
 }

@@ -1,6 +1,6 @@
-package dat3.car.dto;
+package dat3.cars.dto;
 
-import dat3.car.entity.Member;
+import dat3.cars.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

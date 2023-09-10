@@ -1,29 +1,26 @@
-package dat3.car.dto;
+package dat3.cars.dto;
 
-import dat3.car.entity.Car;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import dat3.cars.entity.Car;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class CarDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class CarResponse {
 
     private String brand;
     private String model;
     private double pricePrDay;
     private Integer bestDiscount;
 
-    public static Car getCarEntity(CarDTO carDTO) {
-        return new Car(carDTO.brand, carDTO.model, carDTO.pricePrDay, carDTO.bestDiscount);
-    }
 
-    public CarDTO(Car car, boolean includeAll) {
+    public CarResponse(Car car, boolean includeAll) {
         this.brand = car.getBrand();
         this.model = car.getModel();
         this.pricePrDay = car.getPricePrDay();

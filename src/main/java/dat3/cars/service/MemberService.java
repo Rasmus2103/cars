@@ -1,34 +1,72 @@
-package dat3.car.service;
+package dat3.cars.service;
 
-import dat3.car.dto.MemberRequest;
-import dat3.car.dto.MemberResponse;
-import dat3.car.entity.Member;
-import dat3.car.repository.MemberRepository;
+import dat3.cars.dto.MemberRequest;
+import dat3.cars.dto.MemberResponse;
+import dat3.cars.dto.ReservationResponse;
+import dat3.cars.entity.Member;
+import dat3.cars.entity.Reservation;
+import dat3.cars.repository.MemberRepository;
+import dat3.cars.repository.ReservationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MemberService {
     MemberRepository memberRepository;
+    ReservationRepository reservationRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
-    public List<MemberResponse> getMembers(boolean includeAll) {
-        List<Member> members = memberRepository.findAll();
-        // List<MemberResponse> responses = new ArrayList<>();
-        /*for(Member member: members) {
-            MemberResponse mr = new MemberResponse(member, includeAll);
-            responses.add(mr);
-        }*/
-        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
-        return response;
-    }
+//    public List<MemberResponse> getMembers(boolean includeAll) {
+//        List<Member> members = memberRepository.findAll();
+//        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
+//        for(MemberResponse memberResponse: response) {
+//            List<Reservation> reservations = reservationRepository.findReservationByMember_Username(memberResponse.getUsername());
+//        }
+//        return response;
+//    }
+
+        public List<MemberResponse> getMembers(boolean includeAll) {
+            List<Member> members = memberRepository.findAll();
+            List<MemberResponse> response = new ArrayList<>();
+
+            for (Member member : members) {
+                MemberResponse memberResponse = convertToMemberResponse(member);
+                if (includeAll) {
+                    List<Reservation> reservations = reservationRepository.findReservationByMember_Username(member.getUsername());
+                    List<ReservationResponse> reservationResponses = new ArrayList<>();
+                    for (Reservation reservation : reservations) {
+                        reservationResponses.add(new ReservationResponse(reservation));
+                    }
+                    memberResponse.setReservations(reservationResponses);
+                }
+                response.add(memberResponse);
+            }
+
+            return response;
+        }
+
+        private MemberResponse convertToMemberResponse(Member member) {
+            MemberResponse memberResponse = new MemberResponse(member, true); // assuming your current constructor
+            List<ReservationResponse> reservationResponses = new ArrayList<>();
+
+            for (Reservation reservation : member.getReservations()) {
+                reservationResponses.add(new ReservationResponse(reservation));
+            }
+
+            memberResponse.setReservations(reservationResponses);
+            return memberResponse;
+        }
+
+
+
 
     public MemberResponse addMember(MemberRequest body) {
         if(memberRepository.existsById(body.getUsername())){

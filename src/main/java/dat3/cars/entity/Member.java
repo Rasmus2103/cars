@@ -1,29 +1,22 @@
-package dat3.car.entity;
+package dat3.cars.entity;
 
+import dat3.security.entity.UserWithRoles;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 
 @Entity
-public class Member extends AdminDetails{
-    @Id
-    String username;
-
-    @Column(name = "email", length = 60)
-    String email;
-
-    @Column(name = "password", length = 70)
-    String password;
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
+public class Member extends UserWithRoles {
     @Column(name = "firstname", length = 40)
     String firstName;
 
@@ -45,11 +38,22 @@ public class Member extends AdminDetails{
     @Column(name = "ranking")
     int ranking;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    List<Reservation> reservations;
+
+    public void addReservation(Reservation reservation) {
+        if(reservations == null) {
+            reservations = new ArrayList<>();
+        }
+        reservations.add(reservation);
+    }
+
     public Member(String user, String password, String email, String firstName,
                   String lastName, String street, String city, String zip) {
-        this.username = user;
-        this.password= password;
-        this.email = email;
+        super(user, password, email);
+//        this.username = user;
+//        this.password= password;
+//        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
