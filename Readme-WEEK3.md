@@ -2,6 +2,7 @@
 I have used @OneToMany Annontation in my **Member** entity class, and have set a list with reservations, and giving it the FetchType.LAZY. The reason I have givin it the **@OneToMany** annontation is because of the relationship between **Member** and **Reservations**. Since member can have multiple reservations, it makes since for it to have OneToMany annontation. I have chosen to only give them a FetchType.LAZY, because the LAZY type only fethces the informations when giving access to them.  
 
 ## Where and Why You Have Used a `@ManyToOne` Annotation
+I have used @ManyToOne annontation in 
 
 ## The Purpose of the CascadeType, FetchType, and mappedBy Attributes You Can Use with One-to-Many
 
