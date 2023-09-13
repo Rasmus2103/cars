@@ -18,6 +18,8 @@ The mappedBy attribute is used in a bidirectional relationship between entities,
 ## A Few Words About Where You Have Used Inheritance in Your Project, and How It's Reflected in Your Database
 
 ## What Are the Pros & Cons of Using the Single Table Strategy for Inheritance?
+**Pros** 
+
 
 ## How Are Passwords Stored in the Database with the Changes Suggested in Part-6 of the Exercise
 
